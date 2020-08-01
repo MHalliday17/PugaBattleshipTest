@@ -21,7 +21,7 @@ public enum EnemysType
 public enum BulletType 
 { 
     NORMAL, 
-    ROCKET 
+    ROCKET    
 }
 
 
