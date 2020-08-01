@@ -9,6 +9,7 @@ public class EnemysBehavior : MonoBehaviour
     [SerializeField] protected GameObject energ;
 
     [Header("Settings")]
+    public EnemyStats enemyStatsPreset;
     [SerializeField] EnemysType enemyType;
     [SerializeField] protected List<EnemysStatus> status;
     [SerializeField] protected int level = 1;
@@ -22,6 +23,22 @@ public class EnemysBehavior : MonoBehaviour
     protected float currentRechargTime, currentShieldRechargTime, currentMelleAttackDelay, currentMeleeAttackTime, currentFireDelayTime, fireDelayTime;
     protected bool walk, fire, rechargFire, meleeAttack, rangeAttack, suicide, playerToTarget, shield, rechargShield, stun;
 
+    private void Awake()
+    {
+        SyncEnemyStatsWithPreset();
+    }
+
+    public void SyncEnemyStatsWithPreset()
+    {
+        if (enemyStatsPreset != null)
+        {
+            enemyType = enemyStatsPreset.enemyType;
+            status = enemyStatsPreset.status;
+            level = enemyStatsPreset.level;
+            myCurrencyToDrop = enemyStatsPreset.myCurrencyToDrop;
+            MaxDistanceToDrop = enemyStatsPreset.MaxDistanceToDrop;
+        }
+    }
 
     protected void StartStatus()
     {
@@ -216,6 +233,19 @@ public class EnemysBehavior : MonoBehaviour
                 status[level - 1].meleeAttackDelay = 0;
                 status[level - 1].shieldRechargTime = 0;
                 status[level - 1].stunTime = 0;
+
+                break;
+            case EnemysType.BOMBER:
+                walk = false;
+                fire = true;
+                rechargFire = false;
+                meleeAttack = false;
+                rangeAttack = true;
+                suicide = false;
+                playerToTarget = true;
+                shield = false;
+                rechargShield = false;
+                stun = false;                
 
                 break;
         }

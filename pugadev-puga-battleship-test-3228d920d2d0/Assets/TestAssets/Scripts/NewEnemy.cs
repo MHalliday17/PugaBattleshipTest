@@ -4,18 +4,15 @@ using UnityEngine;
 
 public class NewEnemy : EnemysBehavior
 {
-    public bool isAbleToShoot;
-
-    [Range(0.5f, 10f)]
-    public float shootingDelayTime = 1f;
+    public bool isAbleToShoot;   
 
     public float radius = 2.0f;
     public float radiusSpeed = 0.5f;
-    public float rotationSpeed = 80.0f;
 
     public Transform bombSpawn;
 
     public GameObject bomb;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,7 +30,7 @@ public class NewEnemy : EnemysBehavior
 
     public void OrbitAround(Transform objectToOrbit)
     {
-        transform.RotateAround(objectToOrbit.position, Vector3.up, rotationSpeed * Time.deltaTime);
+        transform.RotateAround(objectToOrbit.position, Vector3.up, status[level - 1].movimentSpeed * Time.deltaTime);
         Vector3 desiredPosition = (transform.position - objectToOrbit.position).normalized * radius + objectToOrbit.position;
         transform.position = Vector3.MoveTowards(transform.position, desiredPosition, Time.deltaTime * radiusSpeed);        
     }
@@ -53,7 +50,7 @@ public class NewEnemy : EnemysBehavior
         {
             //Debug.Log("Shot");
             Instantiate(bomb, bombSpawn.position, Quaternion.identity);
-            yield return new WaitForSeconds(shootingDelayTime);
+            yield return new WaitForSeconds(1 / status[level -1].fireRate);
         }
     }
 

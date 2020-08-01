@@ -5,6 +5,7 @@ public class Status : MonoBehaviour
 {
 
     [Header("Settings")]
+    public ShipStats shipStatsPreset;
     public ShipType myType;
     public List<StatusLevel> allStatus;
     [Range(1, 5)] public int healthLevel;
@@ -13,7 +14,23 @@ public class Status : MonoBehaviour
 
     [Header("Behaviour")]
     protected int damage;
-    protected int currentLife; 
+    protected int currentLife;
+
+    private void Awake()
+    {
+        SyncShipStatsWithPreset();
+    }
+
+    public void SyncShipStatsWithPreset()
+    {
+        if (shipStatsPreset != null)
+        {
+            myType = shipStatsPreset.myType;
+            allStatus = shipStatsPreset.allStatus;        
+            damage = shipStatsPreset.damage;
+            currentLife = shipStatsPreset.currentLife;
+        }
+    }
 
     public void TakeDamage(float applyDamage)
     {
