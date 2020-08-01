@@ -5,7 +5,9 @@ using UnityEngine.UI;
 
 public class UICollectedCoinsController : MonoBehaviour
 {
-    public Text coinsTotalText;
+    public Text coinsHUDText;
+
+    public Text coinsHomeText;
 
     // Start is called before the first frame update
     void Start()
@@ -16,6 +18,11 @@ public class UICollectedCoinsController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        coinsTotalText.text = CurrencyManager.instance.totalCurrencys.ToString();
+        coinsHUDText.text = CurrencyManager.instance.totalCurrencys.ToString();
+    }
+
+    public void UpdateTextValues()
+    {
+
     }
 }

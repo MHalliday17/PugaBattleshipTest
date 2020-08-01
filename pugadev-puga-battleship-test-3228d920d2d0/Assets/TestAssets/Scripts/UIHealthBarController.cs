@@ -7,7 +7,6 @@ public class UIHealthBarController : MonoBehaviour
 {
     public static UIHealthBarController instance;
     public ShipController shipController;
-    public Slider slider;
 
     public int maxhealth;
     public Text healthText;
@@ -32,13 +31,11 @@ public class UIHealthBarController : MonoBehaviour
     public void UpdateBarValue()
     {
         int healthValue = shipController.allStatus[shipController.healthLevel - 1].health;
-        slider.value = Mathf.Lerp(slider.value, healthValue, Time.deltaTime * 5f);
         healthText.text = healthValue + "/" + maxhealth;
     }
 
     public void RestartValues()
     {
-        slider.maxValue = shipController.allStatus[shipController.healthLevel - 1].health;
         maxhealth = shipController.allStatus[shipController.healthLevel - 1].health;
     }
 }

@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public float gameTime = 1;
     [HideInInspector] public bool endGame;
 
+    public GameObject homeScreen;
     public GameObject endGameMenu;
     public Text endGameMenuText;
 
@@ -22,6 +23,11 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         instance = this;
+
+        endGame = true;
+        SpawnManager.Instance.spawnAble = false;
+        gameTime = 0;
+        Time.timeScale = 0f;
     }
 
 
@@ -29,6 +35,16 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetButton("Cancel") && endGame)
             RestatGame();
+    }
+
+    public void GoToHomeScreen()
+    {
+        homeScreen.SetActive(true);
+        endGameMenu.SetActive(false);
+        endGame = true;
+        SpawnManager.Instance.spawnAble = false;
+        gameTime = 0;
+        Time.timeScale = 0f;
     }
 
 
@@ -64,8 +80,10 @@ public class GameManager : MonoBehaviour
 
 
         UIHealthBarController.instance.RestartValues();
+        homeScreen.SetActive(false);
         endGameMenu.SetActive(false);
         CurrencyManager.instance.totalCurrencys = 0;
+        CurrencyManager.instance.UpdateUITexts();
         gameTime = 1;
         Time.timeScale = 1f;
     }
