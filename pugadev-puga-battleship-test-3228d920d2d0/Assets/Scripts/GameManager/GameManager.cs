@@ -106,4 +106,9 @@ public class GameManager : MonoBehaviour
         gameTime = 1;
         Time.timeScale = 1f;
     }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }
