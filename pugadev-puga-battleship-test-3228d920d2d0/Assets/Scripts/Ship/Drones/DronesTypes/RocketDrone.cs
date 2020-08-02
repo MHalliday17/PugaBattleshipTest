@@ -14,7 +14,7 @@ public class RocketDrone : DroneBehavior
 
     [Header("Behaviour")]
     GameObject target;
-    List<GameObject> enemys;
+    public List<GameObject> enemys;
     float TimeToShoot;
     float currentTimeToShoot;
 
@@ -35,8 +35,7 @@ public class RocketDrone : DroneBehavior
 
 
     void UpdateTarget()
-    {
-
+    {        
         if (enemys.Count > 0)
         {
             List<GameObject> EnemysToRemove = new List<GameObject>();

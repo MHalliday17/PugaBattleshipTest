@@ -34,7 +34,7 @@ public class AttackDrone : DroneBehavior
 
 
     void UpdateTarget()
-    {
+    {        
         if (enemys.Count > 0)
         {
             List<GameObject> EnemysToRemove = new List<GameObject>();

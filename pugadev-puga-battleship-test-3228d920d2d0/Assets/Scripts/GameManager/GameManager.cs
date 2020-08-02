@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public bool endGame;
 
     public GameObject homeScreen;
+    public GameObject customShipScreen;
     public GameObject endGameMenu;
     public Text endGameMenuText;
 
@@ -42,6 +43,20 @@ public class GameManager : MonoBehaviour
         CurrencyManager.instance.SaveCurrency();
         CurrencyManager.instance.UpdateUITexts();
         homeScreen.SetActive(true);
+        customShipScreen.SetActive(false);
+        endGameMenu.SetActive(false);
+        endGame = true;
+        SpawnManager.Instance.spawnAble = false;
+        gameTime = 0;
+        Time.timeScale = 0f;
+    }
+
+    public void GoToCustomizeShipScreen()
+    {
+        CurrencyManager.instance.SaveCurrency();
+        CurrencyManager.instance.UpdateUITexts();
+        homeScreen.SetActive(false);
+        customShipScreen.SetActive(true);
         endGameMenu.SetActive(false);
         endGame = true;
         SpawnManager.Instance.spawnAble = false;
@@ -84,6 +99,7 @@ public class GameManager : MonoBehaviour
         CurrencyManager.instance.SaveCurrency();
         UIHealthBarController.instance.RestartValues();
         homeScreen.SetActive(false);
+        customShipScreen.SetActive(false);
         endGameMenu.SetActive(false);
         CurrencyManager.instance.totalCurrencys = 0;
         CurrencyManager.instance.UpdateUITexts();
