@@ -48,28 +48,11 @@ public class NewEnemy : EnemysBehavior
     {
         while (isAbleToShoot)
         {
-            //Debug.Log("Shot");
             if (Vector3.Distance(transform.position, shipTransform.position) <= radius)
             {
                 Instantiate(bomb, bombSpawn.position, Quaternion.identity);
             }
             yield return new WaitForSeconds(1 / status[level -1].fireRate);
         }
-    }
-
-    /*private void OnTriggerEnter(Collider other)
-    {
-        if (other.GetComponent<ShipController>())
-        {
-            SetIsAbleToShoot(true);
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.GetComponent<ShipController>())
-        {
-            SetIsAbleToShoot(false);
-        }
-    }*/
+    }    
 }

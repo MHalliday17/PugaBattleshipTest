@@ -16,6 +16,8 @@ public class CurrencyManager : MonoBehaviour
     [Header("Behaviour")]
     [HideInInspector] public int totalCurrencys;
 
+    [HideInInspector] public int totalCurrenciesSaved;
+
     public Text coinsHUDText;
     public Text coinsEndGameScreenText;
     public Text coinsHomeScreenText;
@@ -31,10 +33,7 @@ public class CurrencyManager : MonoBehaviour
     public void AddCurrency(int valueToAdd)
     {
         totalCurrencys += valueToAdd;
-
-        int savedTotalCurrencies = PlayerPrefs.GetInt("TotalCoins");
-        savedTotalCurrencies += valueToAdd;
-        PlayerPrefs.SetInt("TotalCoins", savedTotalCurrencies);
+        totalCurrenciesSaved += valueToAdd;        
         UpdateUITexts();
     }
 
@@ -42,12 +41,25 @@ public class CurrencyManager : MonoBehaviour
     {
         coinsHUDText.text = totalCurrencys.ToString();
         coinsEndGameScreenText.text = totalCurrencys.ToString();
-        coinsHomeScreenText.text = PlayerPrefs.GetInt("TotalCoins").ToString();
+        coinsHomeScreenText.text = totalCurrenciesSaved.ToString();
     }
 
     public void ResetProgress()
-    {
-        PlayerPrefs.SetInt("TotalCoins", 0);
+    {        
+        totalCurrenciesSaved = 0;
+        SaveCurrency();
         UpdateUITexts();
+    }
+
+    public void SaveCurrency()
+    {
+        SaveSystem.SaveCurrency(this);
+    }
+
+    public void LoadCurrency()
+    {
+        CurrencyData currencyData = SaveSystem.LoadCurrency();
+
+        totalCurrenciesSaved = currencyData.totalCurrency;
     }
 }

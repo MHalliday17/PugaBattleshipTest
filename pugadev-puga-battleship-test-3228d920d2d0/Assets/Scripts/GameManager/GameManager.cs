@@ -39,6 +39,8 @@ public class GameManager : MonoBehaviour
 
     public void GoToHomeScreen()
     {
+        CurrencyManager.instance.SaveCurrency();
+        CurrencyManager.instance.UpdateUITexts();
         homeScreen.SetActive(true);
         endGameMenu.SetActive(false);
         endGame = true;
@@ -60,6 +62,7 @@ public class GameManager : MonoBehaviour
             endGameMenuText.text = "Victory";
             endGameMenuText.color = Color.yellow;
         }
+        CurrencyManager.instance.SaveCurrency();
         endGameMenu.SetActive(true);
         endGame = true;
         SpawnManager.Instance.spawnAble = false;
@@ -78,7 +81,7 @@ public class GameManager : MonoBehaviour
         SpawnManager.Instance.DestroyerAllEnemy();
         SpawnManager.Instance.spawnAble = true;
 
-
+        CurrencyManager.instance.SaveCurrency();
         UIHealthBarController.instance.RestartValues();
         homeScreen.SetActive(false);
         endGameMenu.SetActive(false);
