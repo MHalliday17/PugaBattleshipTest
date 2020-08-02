@@ -33,15 +33,16 @@ public class CurrencyManager : MonoBehaviour
     public void AddCurrency(int valueToAdd)
     {
         totalCurrencys += valueToAdd;
-        totalCurrenciesSaved += valueToAdd;        
+        totalCurrenciesSaved += valueToAdd;
+        SaveCurrency();
         UpdateUITexts();
     }
 
     public void UpdateUITexts()
     {
         coinsHUDText.text = totalCurrencys.ToString();
-        coinsEndGameScreenText.text = totalCurrencys.ToString();
-        coinsHomeScreenText.text = totalCurrenciesSaved.ToString();
+        coinsEndGameScreenText.text = totalCurrencys.ToString();        
+        coinsHomeScreenText.text = LoadCurrency().ToString();
     }
 
     public void ResetProgress()
@@ -56,10 +57,12 @@ public class CurrencyManager : MonoBehaviour
         SaveSystem.SaveCurrency(this);
     }
 
-    public void LoadCurrency()
+    public int LoadCurrency()
     {
         CurrencyData currencyData = SaveSystem.LoadCurrency();
 
-        totalCurrenciesSaved = currencyData.totalCurrency;
+        //totalCurrenciesSaved = currencyData.totalCurrency;
+
+        return currencyData.totalCurrency;
     }
 }

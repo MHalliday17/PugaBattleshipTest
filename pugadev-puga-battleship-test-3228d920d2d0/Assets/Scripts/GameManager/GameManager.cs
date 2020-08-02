@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
 
     public void GoToHomeScreen()
     {
-        CurrencyManager.instance.SaveCurrency();
+        CurrencyManager.instance.SaveCurrency();        
         CurrencyManager.instance.UpdateUITexts();
         homeScreen.SetActive(true);
         customShipScreen.SetActive(false);
