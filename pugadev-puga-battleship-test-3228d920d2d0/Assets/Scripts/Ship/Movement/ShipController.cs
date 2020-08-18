@@ -52,6 +52,10 @@ public class ShipController : Status
     {
         SetShootRate();
         SetDamage();
+
+        mySecondaryCannonType = ShipSettingsManager.instance.LoadShipCannonSettings();
+        myDroneType = ShipSettingsManager.instance.LoadShipDroneSettings();
+
         SetCurrentSecondaryCannon(mySecondaryCannonType);
         SetCurrentDrone(myDroneType);
         SetSpecialStats();

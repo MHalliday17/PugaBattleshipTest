@@ -3,29 +3,38 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIHealthBarController : MonoBehaviour
+public class GUIController : MonoBehaviour
 {
-    public static UIHealthBarController instance;
+    public static GUIController instance;
+    private CurrencyManager currencyManager;
     public ShipController shipController;
 
-    public int maxhealth;
+    public Text currencyText;
+
     public Text healthText;
+    public int maxhealth;
 
     private void Awake()
     {
         instance = this;
+        currencyManager = CurrencyManager.instance;
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         RestartValues();
     }
 
-    // Update is called once per frame
     void Update()
     {
+        UpdateCurrencyText();
         UpdateBarValue();
+        Debug.Log(shipController.allStatus[shipController.healthLevel - 1].health);
+    }
+
+    public void UpdateCurrencyText()
+    {
+        currencyText.text = currencyManager.totalCurrencys.ToString();
     }
 
     public void UpdateBarValue()

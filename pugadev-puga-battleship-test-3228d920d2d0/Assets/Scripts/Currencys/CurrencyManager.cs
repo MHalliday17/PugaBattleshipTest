@@ -14,19 +14,21 @@ public class CurrencyManager : MonoBehaviour
     public int maxCountForCurrencys;
 
     [Header("Behaviour")]
-    [HideInInspector] public int totalCurrencys;
+     public int totalCurrencys;
 
-    [HideInInspector] public int totalCurrenciesSaved;
-
-    public Text coinsHUDText;
-    public Text coinsEndGameScreenText;
-    public Text coinsHomeScreenText;
-
+     public int totalCurrenciesSaved;    
 
     void Awake()
     {
-        instance = this;
-        UpdateUITexts();
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else if (instance != this)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
 
@@ -35,21 +37,16 @@ public class CurrencyManager : MonoBehaviour
         totalCurrencys += valueToAdd;
         totalCurrenciesSaved += valueToAdd;
         SaveCurrency();
-        UpdateUITexts();
-    }
-
-    public void UpdateUITexts()
-    {
-        coinsHUDText.text = totalCurrencys.ToString();
-        coinsEndGameScreenText.text = totalCurrencys.ToString();        
-        coinsHomeScreenText.text = LoadCurrency().ToString();
-    }
+    }    
 
     public void ResetProgress()
     {        
         totalCurrenciesSaved = 0;
         SaveCurrency();
-        UpdateUITexts();
+        if (MenuNavigation.instance != null)
+        {
+            MenuNavigation.instance.UpdateCurrencyText();
+        }
     }
 
     public void SaveCurrency()
@@ -61,7 +58,7 @@ public class CurrencyManager : MonoBehaviour
     {
         CurrencyData currencyData = SaveSystem.LoadCurrency();
 
-        //totalCurrenciesSaved = currencyData.totalCurrency;
+        totalCurrenciesSaved = currencyData.totalCurrency;
 
         return currencyData.totalCurrency;
     }

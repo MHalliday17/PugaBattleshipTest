@@ -38,4 +38,37 @@ public static class SaveSystem
             return null;
         }
     }
+
+    public static void SaveShipSettings(ShipSettingsManager shipManager)
+    {
+        BinaryFormatter formatter = new BinaryFormatter();
+        string path = Application.persistentDataPath + "/shipSettingsSave.save";
+        FileStream stream = new FileStream(path, FileMode.Create);
+
+        ShipSettingsData shipData = new ShipSettingsData(shipManager);
+
+        formatter.Serialize(stream, shipData);
+
+        stream.Close();
+    }
+
+    public static ShipSettingsData LoadShipSettings()
+    {
+        string path = Application.persistentDataPath + "/shipSettingsSave.save";
+        if (File.Exists(path))
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            FileStream stream = new FileStream(path, FileMode.Open);
+
+            ShipSettingsData shipData = formatter.Deserialize(stream) as ShipSettingsData;
+            stream.Close();
+
+            return shipData;
+        }
+        else
+        {
+            Debug.LogError("Save file not found in " + path);
+            return null;
+        }
+    }
 }

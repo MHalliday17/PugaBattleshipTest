@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -25,10 +26,15 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
 
-        endGame = true;
-        SpawnManager.Instance.spawnAble = false;
-        gameTime = 0;
-        Time.timeScale = 0f;
+        endGame = false;
+        SpawnManager.Instance.spawnAble = true;
+        gameTime = 1;
+        Time.timeScale = 1f;        
+    }
+
+    private void Start()
+    {
+        RestatGame();
     }
 
 
@@ -36,53 +42,25 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetButton("Cancel") && endGame)
             RestatGame();
-    }
-
-    public void GoToHomeScreen()
-    {
-        CurrencyManager.instance.SaveCurrency();        
-        CurrencyManager.instance.UpdateUITexts();
-        homeScreen.SetActive(true);
-        customShipScreen.SetActive(false);
-        endGameMenu.SetActive(false);
-        endGame = true;
-        SpawnManager.Instance.spawnAble = false;
-        gameTime = 0;
-        Time.timeScale = 0f;
-    }
-
-    public void GoToCustomizeShipScreen()
-    {
-        CurrencyManager.instance.SaveCurrency();
-        CurrencyManager.instance.UpdateUITexts();
-        homeScreen.SetActive(false);
-        customShipScreen.SetActive(true);
-        endGameMenu.SetActive(false);
-        endGame = true;
-        SpawnManager.Instance.spawnAble = false;
-        gameTime = 0;
-        Time.timeScale = 0f;
-    }
-
+    }   
 
     public void EndGame(bool playerIsDead)
     {
-        if (playerIsDead)
-        {
-            endGameMenuText.text = "Defeat";
-            endGameMenuText.color = Color.red;
-        }
-        else
-        {
-            endGameMenuText.text = "Victory";
-            endGameMenuText.color = Color.yellow;
-        }
         CurrencyManager.instance.SaveCurrency();
-        endGameMenu.SetActive(true);
         endGame = true;
         SpawnManager.Instance.spawnAble = false;
         gameTime = 0;
         Time.timeScale = 0f;
+
+        if (playerIsDead)
+        {            
+            Debug.Log(ship.GetComponent<ShipController>().allStatus[ship.GetComponent<ShipController>().healthLevel - 1].health);
+            SceneManager.LoadScene(4);
+        }
+        else
+        {            
+            SceneManager.LoadScene(3);
+        }
     }
 
 
@@ -96,13 +74,8 @@ public class GameManager : MonoBehaviour
         SpawnManager.Instance.DestroyerAllEnemy();
         SpawnManager.Instance.spawnAble = true;
 
-        CurrencyManager.instance.SaveCurrency();
-        UIHealthBarController.instance.RestartValues();
-        homeScreen.SetActive(false);
-        customShipScreen.SetActive(false);
-        endGameMenu.SetActive(false);
+        GUIController.instance.RestartValues();        
         CurrencyManager.instance.totalCurrencys = 0;
-        CurrencyManager.instance.UpdateUITexts();
         gameTime = 1;
         Time.timeScale = 1f;
     }
