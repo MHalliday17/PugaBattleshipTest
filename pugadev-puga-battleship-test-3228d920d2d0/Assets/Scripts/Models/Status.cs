@@ -5,7 +5,7 @@ public class Status : MonoBehaviour
 {
 
     [Header("Settings")]
-    public ShipStats shipStatsPreset;
+    private ShipStats shipStatsPreset;
     public ShipType myType;
     public List<StatusLevel> allStatus;
     [Range(1, 5)] public int healthLevel;
@@ -23,13 +23,25 @@ public class Status : MonoBehaviour
 
     public void SyncShipStatsWithPreset()
     {
-        if (shipStatsPreset != null)
+        foreach (ShipStats shipStatsPreset in GameManager.instance.shipPresetStatsPool)
+        {
+            if (shipStatsPreset.myType == myType)
+            {
+                myType = shipStatsPreset.myType;
+                allStatus = shipStatsPreset.allStatus;
+                damage = shipStatsPreset.damage;
+                currentLife = shipStatsPreset.currentLife;
+                return;
+            }
+        }
+
+        /*if (shipStatsPreset != null)
         {
             myType = shipStatsPreset.myType;
             allStatus = shipStatsPreset.allStatus;        
             damage = shipStatsPreset.damage;
             currentLife = shipStatsPreset.currentLife;
-        }
+        }*/
     }
 
     public void TakeDamage(float applyDamage)

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -16,10 +17,8 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public float gameTime = 1;
     [HideInInspector] public bool endGame;
 
-    public GameObject homeScreen;
-    public GameObject customShipScreen;
-    public GameObject endGameMenu;
-    public Text endGameMenuText;
+    public List<EnemyStats> enemyPresetStatsPool = new List<EnemyStats>();
+    public List<ShipStats> shipPresetStatsPool = new List<ShipStats>();
 
 
     void Awake()

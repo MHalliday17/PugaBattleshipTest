@@ -9,7 +9,7 @@ public class EnemysBehavior : MonoBehaviour
     [SerializeField] protected GameObject energ;
 
     [Header("Settings")]
-    public EnemyStats enemyStatsPreset;
+    private EnemyStats enemyStatsPreset;
     [SerializeField] EnemysType enemyType;
     [SerializeField] protected List<EnemysStatus> status;
     [SerializeField] protected int level = 1;
@@ -30,14 +30,27 @@ public class EnemysBehavior : MonoBehaviour
 
     public void SyncEnemyStatsWithPreset()
     {
-        if (enemyStatsPreset != null)
+        foreach (EnemyStats enemyTypePreset in GameManager.instance.enemyPresetStatsPool)
+        {
+            if (enemyTypePreset.enemyType == enemyType)
+            {
+                enemyType = enemyTypePreset.enemyType;
+                status = enemyTypePreset.status;
+                level = enemyTypePreset.level;
+                myCurrencyToDrop = enemyTypePreset.myCurrencyToDrop;
+                MaxDistanceToDrop = enemyTypePreset.MaxDistanceToDrop;
+                return;
+            }
+        }
+        
+        /*if (enemyStatsPreset != null)
         {
             enemyType = enemyStatsPreset.enemyType;
             status = enemyStatsPreset.status;
             level = enemyStatsPreset.level;
             myCurrencyToDrop = enemyStatsPreset.myCurrencyToDrop;
             MaxDistanceToDrop = enemyStatsPreset.MaxDistanceToDrop;
-        }
+        }*/
     }
 
     protected void StartStatus()
